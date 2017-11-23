@@ -2,28 +2,38 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class TitleAndDescription extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+  render() {
+    return (
+      <div>
+        <input type="text" placeholder={this.props.title}/>
+        <br/>
+        <textarea type="textarea" placeholder={this.props.description}></textarea>
+      </div>
+    )
+  }
+}
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <input type="text" value="title"/>
-        <br/>
-        <textarea type="textarea" value="description"></textarea>
+        <TitleAndDescription title="Quizz Title" description="Quizz Description"/>
         <div>
           Results
           <br/>
-          <input type="text" value="title"/>
-          <br/>
-          <textarea type="textarea" value="description"></textarea>
+          <TitleAndDescription title="Result Title" description="Result Description"/>
           <br/>
           <button>Add</button>
         </div>
         <div>
           Questions 1 of x
           <br/>
-          <input type="text" value="Question Text"/>
-          <br/>
-          <textarea type="textarea" value="Question Description"></textarea>
+          <TitleAndDescription title="Question Title" description="Question Description"/>
           <br/>
           Answers
           <br/>
