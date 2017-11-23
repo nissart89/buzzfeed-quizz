@@ -6,6 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+<<<<<<< HEAD
         <input type="text" value="title"/>
         <br/>
         <textarea type="textarea" value="description"></textarea>
@@ -40,6 +41,9 @@ class App extends Component {
         </div>
 
 
+=======
+        <div><p>first push</p>
+>>>>>>> 5e70c008671c943a31a391bbf714955e48d18bc8
       </div>
     );
   }
