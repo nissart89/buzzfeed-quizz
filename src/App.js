@@ -1,133 +1,16 @@
 import React, { Component } from 'react';
+
+// Custom Components
+import { Button } from './components/Button';
+import { Results } from './components/Results';
+import { Questions } from './components/QuestionAndAnswer';
+import { TitleAndDescription } from './components/TitleAndDescription';
+
+// React Components
 import logo from './logo.svg';
 import './App.css';
 
-class TitleAndDescription extends Component {
 
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   title: 'TITLE',
-    //   description: '',
-    // };
-  }
-
-  handleTitleChange(e) {
-    this.props.onTitleChange(e.target.value)
-  }
-  handleDescriptionChange(e) {
-    this.props.onDescriptionChange(e.target.value)
-  }
-
-  render() {
-    const title = this.props.title;
-    const description = this.props.description;
-
-    return (
-      <div>
-        <input name="title" value={title} onChange={(e) => this.handleTitleChange(e)} type="text" placeholder={this.props.titlePlaceholder} />
-        <br />
-        <textarea name="description" value={description} onChange={(e) => this.handleDescriptionChange(e)} type="textarea" placeholder={this.props.descriptionPlaceholder}/>
-      </div>
-    )
-  }
-}
-//
-// class Questions extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//     return (
-//       <div>
-//         <Section>
-//           <TitleAndDescription title="Question Title" description="Question Description" />
-//           <h4>Answers</h4>
-//           <Section>
-//             <Answers results={this.props.results} title='Answers' />
-//           </Section>
-//           <Button name='Add +' />
-//         </Section>
-//       </div>
-//     )
-//   }
-// }
-//
-// class Answers extends Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//
-//   results() {
-//
-//   }
-//
-//   render() {
-//     console.log(this.props.results);
-//     return (
-//       <div>
-//         <input type="text" placeholder={this.props.title} />
-//         <br />
-//         <select>
-//           <option>item</option>
-//         </select>
-//       </div>
-//     )
-//   }
-// }
-
-class Results extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      title: '',
-      description: '',
-    };
-  }
-  handleTitleChange(title) {
-    this.setState({title: title})
-  }
-  handleDescriptionChange(description) {
-    this.setState({description: description})
-  }
-  render() {
-    const title = this.state.title;
-    const description = this.state.description;
-    return (
-      <div>
-        <Section buttonName='add +'>
-          <TitleAndDescription
-            onTitleChange={(e) => this.handleTitleChange(e)}
-            onDescriptionChange={(e) => this.handleDescriptionChange(e)}
-            title={this.state.title}
-            description={this.state.description}
-            titlePlaceholder="Results title"
-            descriptionPlaceholder="Results description"
-          />
-        </Section>
-      </div>
-    )
-  }
-}
-
-function Button(props) {
-  return (
-    <button onClick={props.onClick}>{props.name}</button>
-  );
-}
-
-function duplicate(element) {
-
-}
-
-function Section(props) {
-  return (
-    <div>
-      {props.children}
-    </div>
-  )
-}
 class App extends Component {
 
   constructor(props) {
@@ -137,20 +20,14 @@ class App extends Component {
         {
           "title": '',
           "results": ''
-        },
-        {
-          "title": '',
-          "results": ''
         }
       ],
       "questions": [
         {
-          "index": 0,
-          "titel": "",
+          "title": "",
           "description": "",
           "answers": [
             {
-              "index":0,
               "title": "",
               "result": ""
             }
@@ -161,6 +38,19 @@ class App extends Component {
   }
 
   addQuestion() {
+    const questionElement = [{
+      "title": "",
+      "description": "",
+      "answers": [
+        {
+          "title": "",
+          "result": ""
+        }
+      ]
+    }]
+    console.log('clicked')
+
+    this.setState({ questions: this.state.questions.concat(questionElement) })
 
   }
 
@@ -169,13 +59,12 @@ class App extends Component {
       "title": '',
       "results": ''
     }]
-
     this.setState({results : this.state.results.concat(resultElement)})
-
   }
 
   render() {
     const results = this.state.results.map((x, index)=> <Results key={index}/>)
+    const questions = this.state.questions.map((x, index) => <Questions key={index} />)
     return (
       <div className="App">
 
@@ -186,9 +75,9 @@ class App extends Component {
         <Button name="Add +" onClick={() => this.addResult()}/>
 
         <h4>Questions</h4>
-        {/* <Questions results={this.state.results}/> */}
+        {questions}
         <br />
-        <Button name="Add +"/>
+        <Button name="Add +" onClick={() => this.addQuestion()}/>
 
 
           {/* Answers
