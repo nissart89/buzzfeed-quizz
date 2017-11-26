@@ -6,28 +6,21 @@ export class Results extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            title: '',
-            description: '',
-        };
-    }
-    handleTitleChange(title) {
-        this.setState({ title: title })
-    }
-    handleDescriptionChange(description) {
-        this.setState({ description: description })
+        // this.state = {
+        //     title: '',
+        //     description: '',
+        // };
     }
     render() {
-        const title = this.state.title;
-        const description = this.state.description;
+
         return (
             <div>
                 <Section buttonName='add +'>
                     <TitleAndDescription
-                        onTitleChange={(e) => this.handleTitleChange(e)}
-                        onDescriptionChange={(e) => this.handleDescriptionChange(e)}
-                        title={this.state.title}
-                        description={this.state.description}
+                        // onTextChange={(type, e) => this.handleTextChange(type, e)}
+                        onTextChange={this.props.onTextChange}
+                        title={this.props.title}
+                        description={this.props.description}
                         titlePlaceholder="Results title"
                         descriptionPlaceholder="Results description"
                     />

@@ -62,8 +62,23 @@ class App extends Component {
     this.setState({results : this.state.results.concat(resultElement)})
   }
 
+  handleTextChange(type, index, e) {
+    if (type === 'title') {
+      // this.setState({results: e});
+    }
+    else {
+      // this.setState({ description: e })
+    }
+  }
+
   render() {
-    const results = this.state.results.map((x, index)=> <Results key={index}/>)
+    const results = this.state.results.map((x, index)=> <Results
+                                                            title={this.state.results[index].title}
+                                                            description={this.state.results[index].description}
+                                                            onTextChange={(type, e) => this.handleTextChange(type, index, e)}
+                                                            key={index}
+                                                            />)
+
     const questions = this.state.questions.map((x, index) => <Questions key={index} />)
     return (
       <div className="App">
