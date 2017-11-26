@@ -11,11 +11,6 @@ import logo from './logo.svg';
 import './App.css';
 
 
-
-function duplicate(element) {
-
-}
-
 class App extends Component {
 
   constructor(props) {
@@ -29,12 +24,10 @@ class App extends Component {
       ],
       "questions": [
         {
-          "index": 0,
-          "titel": "",
+          "title": "",
           "description": "",
           "answers": [
             {
-              "index":0,
               "title": "",
               "result": ""
             }
@@ -45,6 +38,19 @@ class App extends Component {
   }
 
   addQuestion() {
+    const questionElement = [{
+      "title": "",
+      "description": "",
+      "answers": [
+        {
+          "title": "",
+          "result": ""
+        }
+      ]
+    }]
+    console.log('clicked')
+
+    this.setState({ questions: this.state.questions.concat(questionElement) })
 
   }
 
@@ -53,13 +59,12 @@ class App extends Component {
       "title": '',
       "results": ''
     }]
-
     this.setState({results : this.state.results.concat(resultElement)})
-
   }
 
   render() {
     const results = this.state.results.map((x, index)=> <Results key={index}/>)
+    const questions = this.state.questions.map((x, index) => <Questions key={index} />)
     return (
       <div className="App">
 
@@ -70,9 +75,9 @@ class App extends Component {
         <Button name="Add +" onClick={() => this.addResult()}/>
 
         <h4>Questions</h4>
-        <Questions />
+        {questions}
         <br />
-        <Button name="Add +"/>
+        <Button name="Add +" onClick={() => this.addQuestion()}/>
 
 
           {/* Answers
