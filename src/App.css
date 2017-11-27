@@ -1,28 +1,52 @@
+* {
+  box-sizing: border-box;
+}
 .App {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  padding: 2em;
+  max-width: 40em;
+  margin: auto;
+}
+.container-quizz-header {
+  padding: 1em;
+}
+input[type="text"], textarea {
+    width: 100%;
+    padding: 1em;
+    margin: .5em;
+  }
+
+input[type="text"] {
+  height: 2em;
+  padding: 1em;
+  margin: .5em;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+textarea {
+  height: 4em;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.container-results {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-.App-title {
-  font-size: 1.5em;
+.container-results > div {
+  flex: 0 1 50%;
+  padding: 1em;
 }
 
-.App-intro {
-  font-size: large;
+.container-results h2 {
+  flex-basis: 100%;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.container-results button {
+  flex-basis: 55%;
+}
+.container-results .section {
+  display: block;
 }
