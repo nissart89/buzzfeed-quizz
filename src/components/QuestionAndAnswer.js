@@ -4,19 +4,22 @@ import { TitleAndDescription } from "./TitleAndDescription"
 import { Button } from "./Button"
 
 export class Questions extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div>
         <Section>
-          <TitleAndDescription title="Question Title" description="Question Description" />
+          <TitleAndDescription
+              onTextChange={this.props.onTextChange}
+              title={this.props.title}
+              description={this.props.description}
+              titlePlaceholder="Question title"
+              descriptionPlaceholder="Question description"
+          />
           <h4>Answers</h4>
           <Section>
             <Answers results={this.props.results} title='Answers' />
           </Section>
-          <Button name='Add +' />
+          <Button name='Add an answer' />
         </Section>
       </div>
     )
@@ -24,10 +27,6 @@ export class Questions extends Component {
 }
 
 class Answers extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   results() {
 
   }
