@@ -24,8 +24,13 @@ class App extends Component {
         {
           "title": '',
           "description": '',
-          "results": ''
-        }
+          "count": ''
+        },
+        {
+          "title": '',
+          "description": '',
+          "count": ''
+        },
       ],
       "questions": [
         {
@@ -34,8 +39,12 @@ class App extends Component {
           "answers": [
             {
               "title": "",
-              "result": ""
-            }
+              "result": "",
+            },
+            {
+              "title": "",
+              "result": "",
+            },
           ]
         }
       ]
@@ -62,11 +71,21 @@ class App extends Component {
   addResult() {
     const resultElement = [{
       "title": '',
-      "results": ''
+      "description": '',
+      "count": '',
     }]
     this.setState({results : this.state.results.concat(resultElement)})
   }
 
+  addAnswer (index, e) {
+    const answerElement = {
+      "title": "",
+      "result": ""
+    }
+    let questions = [ ...this.state.questions ]
+    questions[index].answers.push(answerElement);
+    this.setState({questions : questions})
+  }
   //  QUIZZ CHANGE HANDLER
   handleQuizzChange(type, e) {
     if (type === 'title') {
@@ -118,69 +137,42 @@ class App extends Component {
                                                           />)
 
     const questions = this.state.questions.map((x, index) => <Questions
+                                                                results={this.state.results}
+                                                                addAnswer={(e) => this.addAnswer(index, e)}
+                                                                answers={this.state.questions[index].answers}
                                                                 title={this.state.questions[index].title}
                                                                 description={this.state.questions[index].description}
                                                                 onTextChange={(type, e) => this.handleQuestionChange(type, index, e)}
                                                                 key={index}
                                                               />)
+
     return (
       <div className="App">
-
-        <TitleAndDescription
-          onTextChange={(type, e) => this.handleQuizzChange(type, e)}
-          title={this.state.quizz.title}
-          description={this.state.quizz.description}
-          titlePlaceholder="Quizz title"
-          descriptionPlaceholder="Quizz description"/>
-
-        <h4>Results</h4>
-        {results}
-        <Button name="Add a result" onClick={() => this.addResult()}/>
-
-        <h4>Questions</h4>
-        {questions}
-        <br />
-        <Button name="Add a question" onClick={() => this.addQuestion()}/>
-
-
-          {/* Answers
+        <div className="container-quizz-header">
+          <h1>Buzz<br/>Quizz</h1>
+          <TitleAndDescription
+            onTextChange={(type, e) => this.handleQuizzChange(type, e)}
+            title={this.state.quizz.title}
+            description={this.state.quizz.description}
+            titlePlaceholder="Title"
+            descriptionPlaceholder="Description"/>
+        </div>
+        <div className="container-results">
+          <h2>Results</h2>
+          <div className="result-list">
+            {results}
+          </div>
+          <Button name="Add a result" onClick={() => this.addResult()}/>
+        </div>
+        <div className="container-questions">
+          <h3>Questions</h3>
+          {questions}
           <br />
-          <input type="text" value="Answer title" />
-          <br />
-          <select>
-            <option>Assign a result</option>
-          </select>
-          <br />
-          <button>Add Answer</button>
-          <br />
-          <br />
-          <button>Add Question</button>
-        </div> */}
-
-
+          <Button name="Add a question" onClick={() => this.addQuestion()}/>
+        </div>
       </div>
     );
   }
 }
 
 export default App;
-
-
-//  STATE!
-  // "results": [
-  //   {
-  //     "title": '',
-  //     "results": ''
-  //   }
-  // ],
-  // "questions": [
-  //   {
-  //     "titel": "",
-  //     "description": "",
-  //     "answers": {
-  //       "title": "",
-  //       "result": ""
-  //     }
-  //   }
-  // ]
-// }
