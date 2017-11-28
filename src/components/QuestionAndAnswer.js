@@ -6,18 +6,20 @@ import { Button } from "./Button"
 export class Questions extends Component {
   render() {
     return (
-      <div>
+      <div className="question-answer">
         <Section>
           <TitleAndDescription
               onTextChange={this.props.onTextChange}
               title={this.props.title}
               description={this.props.description}
-              titlePlaceholder="Question title"
-              descriptionPlaceholder="Question description"
+              titlePlaceholder="Question"
+              descriptionPlaceholder="Question detail"
           />
           <h4>Answers</h4>
           <Section>
-            <Answers results={this.props.results} title='Answers' />
+            <ul className="answer-list">
+              <Answers results={this.props.results} title='Answer' />
+            </ul>
           </Section>
           <Button name='Add an answer' />
         </Section>
@@ -34,13 +36,13 @@ class Answers extends Component {
   render() {
     console.log(this.props.results);
     return (
-      <div>
+      <li>
         <input type="text" placeholder={this.props.title} />
         <br />
         <select>
           <option>item</option>
         </select>
-      </div>
+      </li>
     )
   }
 }

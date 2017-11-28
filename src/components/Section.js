@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Section = (props) => {
     return (
-        <div>
+        <div className="section">
             {props.children}
         </div>
     )

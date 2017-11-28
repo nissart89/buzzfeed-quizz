@@ -25,7 +25,12 @@ class App extends Component {
           "title": '',
           "description": '',
           "results": ''
-        }
+        },
+        {
+          "title": '',
+          "description": '',
+          "results": ''
+        },
       ],
       "questions": [
         {
@@ -125,62 +130,31 @@ class App extends Component {
                                                               />)
     return (
       <div className="App">
-
-        <TitleAndDescription
-          onTextChange={(type, e) => this.handleQuizzChange(type, e)}
-          title={this.state.quizz.title}
-          description={this.state.quizz.description}
-          titlePlaceholder="Quizz title"
-          descriptionPlaceholder="Quizz description"/>
-
-        <h4>Results</h4>
-        {results}
-        <Button name="Add a result" onClick={() => this.addResult()}/>
-
-        <h4>Questions</h4>
-        {questions}
-        <br />
-        <Button name="Add a question" onClick={() => this.addQuestion()}/>
-
-
-          {/* Answers
+        <div className="container-quizz-header">
+          <h1>Buzz<br/>Quizz</h1>
+          <TitleAndDescription
+            onTextChange={(type, e) => this.handleQuizzChange(type, e)}
+            title={this.state.quizz.title}
+            description={this.state.quizz.description}
+            titlePlaceholder="Title"
+            descriptionPlaceholder="Description"/>
+        </div>
+        <div className="container-results">
+          <h2>Results</h2>
+          <div className="result-list">
+            {results}
+          </div>
+          <Button name="Add a result" onClick={() => this.addResult()}/>
+        </div>
+        <div className="container-questions">
+          <h3>Questions</h3>
+          {questions}
           <br />
-          <input type="text" value="Answer title" />
-          <br />
-          <select>
-            <option>Assign a result</option>
-          </select>
-          <br />
-          <button>Add Answer</button>
-          <br />
-          <br />
-          <button>Add Question</button>
-        </div> */}
-
-
+          <Button name="Add a question" onClick={() => this.addQuestion()}/>
+        </div>
       </div>
     );
   }
 }
 
 export default App;
-
-
-//  STATE!
-  // "results": [
-  //   {
-  //     "title": '',
-  //     "results": ''
-  //   }
-  // ],
-  // "questions": [
-  //   {
-  //     "titel": "",
-  //     "description": "",
-  //     "answers": {
-  //       "title": "",
-  //       "result": ""
-  //     }
-  //   }
-  // ]
-// }

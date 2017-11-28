@@ -11,8 +11,8 @@ export class Results extends Component {
                         onTextChange={this.props.onTextChange}
                         title={this.props.title}
                         description={this.props.description}
-                        titlePlaceholder="Results title"
-                        descriptionPlaceholder="Results description"
+                        titlePlaceholder="Results"
+                        descriptionPlaceholder="Results detail"
                     />
                 </Section>
             </div>
