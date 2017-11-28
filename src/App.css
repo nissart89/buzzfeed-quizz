@@ -172,6 +172,9 @@ button:hover {
   right: 30%;
 }
 
+.question-answer h4 {
+  margin: 2em 0 0;
+}
 .question-answer button {
   width: calc(100% - 1rem);
 }
@@ -201,4 +204,9 @@ button:hover {
 }
 .question-answer [name="description"] {
   min-height: 2rem;
+}
+
+.delete-button {
+  background: gold;
+  color: #000;
 }
