@@ -25,7 +25,12 @@ class App extends Component {
           "title": '',
           "description": '',
           "results": ''
-        }
+        },
+        {
+          "title": '',
+          "description": '',
+          "results": ''
+        },
       ],
       "questions": [
         {
@@ -126,7 +131,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container-quizz-header">
-          <h1>Quizz</h1>
+          <h1>Buzz<br/>Quizz</h1>
           <TitleAndDescription
             onTextChange={(type, e) => this.handleQuizzChange(type, e)}
             title={this.state.quizz.title}
@@ -136,7 +141,9 @@ class App extends Component {
         </div>
         <div className="container-results">
           <h2>Results</h2>
-          {results}
+          <div className="result-list">
+            {results}
+          </div>
           <Button name="Add a result" onClick={() => this.addResult()}/>
         </div>
         <div className="container-questions">
