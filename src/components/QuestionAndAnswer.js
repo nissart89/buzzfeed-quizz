@@ -4,10 +4,17 @@ import { TitleAndDescription } from "./TitleAndDescription"
 import { Button } from "./Button"
 
 export class Questions extends Component {
+  deleteButton() {
+    if (this.props.questionsLength > 1) {
+      return <Button css="delete-button" name="Delete this result" onClick={this.props.questionDelete}/>
+    }
+  }
   render() {
   const answers = this.props.answers.map((x, index) => <Answers results={this.props.results}
                                                               title='Answer'
                                                               key={index}
+                                                              onAnswerChange={(type, e) => this.props.onAnswerChange(type, index, e)}
+                                                              onSelectChange={(type, e) => this.props.onSelectChange(type, index, e)}
                                                             />)
     return (
       <div className="question-answer">
@@ -19,6 +26,7 @@ export class Questions extends Component {
               titlePlaceholder="Question"
               descriptionPlaceholder="Question detail"
           />
+          {this.deleteButton()}
           <h4>Answers</h4>
           <Section>
             <ul className="answer-list">
@@ -33,15 +41,19 @@ export class Questions extends Component {
 }
 
 class Answers extends Component {
+  handleChange(type, e) {
+      this.props.onAnswerChange(type, e.target.value)
+  }
   render() {
     const results = this.props.results.map((x, index)=> <option>{this.props.results[index].title}</option>)
 
     console.log(this.props.results);
     return (
       <li>
-        <input type="text" placeholder={this.props.title} />
+        <input type="text" placeholder={this.props.title} onChange={(e) => this.handleChange('input', e)} />
         <br />
-        <select>
+        <select value={this.props.value} onChange={(e) => this.handleChange('select', e)}>
+          <option disabled selected>Results</option>
           {results}
         </select>
       </li>

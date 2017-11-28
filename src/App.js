@@ -119,7 +119,6 @@ class App extends Component {
       let questions = [ ...this.state.questions ];
       questions[index].title = e ;
       this.setState({ questions });
-
     }
     else {
       let questions = [ ...this.state.questions ];
@@ -128,11 +127,27 @@ class App extends Component {
     }
   }
 
+  handleDeleteButton(index, type, e) {
+    let update = this.state[type];
+    update.splice([index], 1)
+    this.setState({ update });
+  }
+
+  handleAnswerChange(type, indexQ, indexA, e) {
+      let key;
+      type === 'input' ? key = 'title' : key = 'result';
+      let questions = this.state.questions;
+      let answers = questions[indexQ].answers;
+      answers[indexA][key] = e;
+      this.setState({ questions });
+  }
   render() {
     const results = this.state.results.map((x, index)=> <Results
                                                             title={this.state.results[index].title}
                                                             description={this.state.results[index].description}
                                                             onTextChange={(type, e) => this.handleResultsChange(type, index, e)}
+                                                            resultDelete={(e) => this.handleDeleteButton(index, 'results', e)}
+                                                            resultsLength={this.state.results.length}
                                                             key={index}
                                                           />)
 
@@ -143,6 +158,9 @@ class App extends Component {
                                                                 title={this.state.questions[index].title}
                                                                 description={this.state.questions[index].description}
                                                                 onTextChange={(type, e) => this.handleQuestionChange(type, index, e)}
+                                                                onAnswerChange={(type, indexA, e) => this.handleAnswerChange(type, index, indexA, e)}
+                                                                questionDelete={(e) => this.handleDeleteButton(index, 'questions', e)}
+                                                                questionsLength={this.state.questions.length}
                                                                 key={index}
                                                               />)
 
