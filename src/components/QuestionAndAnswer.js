@@ -5,6 +5,10 @@ import { Button } from "./Button"
 
 export class Questions extends Component {
   render() {
+  const answers = this.props.answers.map((x, index) => <Answers results={this.props.results}
+                                                              title='Answer'
+                                                              key={index}
+                                                            />)
     return (
       <div className="question-answer">
         <Section>
@@ -18,10 +22,10 @@ export class Questions extends Component {
           <h4>Answers</h4>
           <Section>
             <ul className="answer-list">
-              <Answers results={this.props.results} title='Answer' />
+              {answers}
             </ul>
           </Section>
-          <Button name='Add an answer' />
+          <Button name="Add an answer" onClick={this.props.addAnswer}/>
         </Section>
       </div>
     )
@@ -29,18 +33,16 @@ export class Questions extends Component {
 }
 
 class Answers extends Component {
-  results() {
-
-  }
-
   render() {
+    const results = this.props.results.map((x, index)=> <option>{this.props.results[index].title}</option>)
+
     console.log(this.props.results);
     return (
       <li>
         <input type="text" placeholder={this.props.title} />
         <br />
         <select>
-          <option>item</option>
+          {results}
         </select>
       </li>
     )

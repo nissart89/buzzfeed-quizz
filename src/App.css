@@ -179,6 +179,7 @@ button:hover {
 .answer-list {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .answer-list li {

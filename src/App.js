@@ -24,12 +24,12 @@ class App extends Component {
         {
           "title": '',
           "description": '',
-          "results": ''
+          "count": ''
         },
         {
           "title": '',
           "description": '',
-          "results": ''
+          "count": ''
         },
       ],
       "questions": [
@@ -39,8 +39,12 @@ class App extends Component {
           "answers": [
             {
               "title": "",
-              "result": ""
-            }
+              "result": "",
+            },
+            {
+              "title": "",
+              "result": "",
+            },
           ]
         }
       ]
@@ -67,11 +71,21 @@ class App extends Component {
   addResult() {
     const resultElement = [{
       "title": '',
-      "results": ''
+      "description": '',
+      "count": '',
     }]
     this.setState({results : this.state.results.concat(resultElement)})
   }
 
+  addAnswer (index, e) {
+    const answerElement = {
+      "title": "",
+      "result": ""
+    }
+    let questions = [ ...this.state.questions ]
+    questions[index].answers.push(answerElement);
+    this.setState({questions : questions})
+  }
   //  QUIZZ CHANGE HANDLER
   handleQuizzChange(type, e) {
     if (type === 'title') {
@@ -123,11 +137,15 @@ class App extends Component {
                                                           />)
 
     const questions = this.state.questions.map((x, index) => <Questions
+                                                                results={this.state.results}
+                                                                addAnswer={(e) => this.addAnswer(index, e)}
+                                                                answers={this.state.questions[index].answers}
                                                                 title={this.state.questions[index].title}
                                                                 description={this.state.questions[index].description}
                                                                 onTextChange={(type, e) => this.handleQuestionChange(type, index, e)}
                                                                 key={index}
                                                               />)
+
     return (
       <div className="App">
         <div className="container-quizz-header">
