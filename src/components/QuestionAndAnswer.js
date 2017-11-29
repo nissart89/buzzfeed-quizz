@@ -45,15 +45,13 @@ class Answers extends Component {
       this.props.onAnswerChange(type, e.target.value)
   }
   render() {
-    const results = this.props.results.map((x, index)=> <option>{this.props.results[index].title}</option>)
-
-    console.log(this.props.results);
+    const results = this.props.results.map((x, index)=> <option key={index}>{this.props.results[index].title}</option>)
     return (
       <li>
         <input type="text" placeholder={this.props.title} onChange={(e) => this.handleChange('input', e)} />
         <br />
-        <select value={this.props.value} onChange={(e) => this.handleChange('select', e)}>
-          <option disabled selected>Results</option>
+        <select defaultValue="Select a Results" value={this.props.value} onChange={(e) => this.handleChange('select', e)}>
+          <option disabled>Select a Results</option>
           {results}
         </select>
       </li>
