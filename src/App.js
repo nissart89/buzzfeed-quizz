@@ -10,9 +10,7 @@ import { TitleAndDescription } from './components/TitleAndDescription';
 import logo from './logo.svg';
 import './App.css';
 
-
-class App extends Component {
-
+class Quizz extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,10 +60,7 @@ class App extends Component {
         }
       ]
     }]
-    console.log('clicked')
-
     this.setState({ questions: this.state.questions.concat(questionElement) })
-
   }
 
   addResult() {
@@ -141,6 +136,10 @@ class App extends Component {
       answers[indexA][key] = e;
       this.setState({ questions });
   }
+
+  saveQuizz() {
+    this.props.saveQuizz(this.state);
+  }
   render() {
     const results = this.state.results.map((x, index)=> <Results
                                                             title={this.state.results[index].title}
@@ -188,9 +187,10 @@ class App extends Component {
           <br />
           <Button name="Add a question" onClick={() => this.addQuestion()}/>
         </div>
+        <Button onClick={() => this.saveQuizz()} name="Save this Quizz"/>
       </div>
     );
   }
 }
 
-export default App;
+export default Quizz;
