@@ -164,7 +164,7 @@ class Quizz extends Component {
                                                               />)
 
     return (
-      <div className="App">
+      <div>
         <div className="container-quizz-header">
           <h1>Buzz<br/>Quizz</h1>
           <TitleAndDescription

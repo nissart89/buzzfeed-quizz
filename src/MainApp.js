@@ -10,6 +10,9 @@ class MainApp extends Component {
     }
   }
   saveQuizz(state) {
+    const savedTooltip = document.getElementById('saved-tooltip');
+
+    savedTooltip.classList.add('saved');
     this.setState({"QuizzState": [...this.state.QuizzState, state]})
   }
   renderQuizz(state) {
@@ -17,8 +20,9 @@ class MainApp extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="App">
         <Quizz renderQuizz="..." saveQuizz={(state) => this.saveQuizz(state)}/>
+        <div div="saved-tooltip" className="saved-tooltip">Quizz Saved!</div>
       </div>
     );
   }
