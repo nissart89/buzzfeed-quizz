@@ -15,6 +15,7 @@ export class Questions extends Component {
                                                               key={index}
                                                               onAnswerChange={(type, e) => this.props.onAnswerChange(type, index, e)}
                                                               onSelectChange={(type, e) => this.props.onSelectChange(type, index, e)}
+                                                              answerDelete={() => this.props.answerDelete(index)}
                                                             />)
     return (
       <div className="question-answer">
@@ -44,6 +45,10 @@ class Answers extends Component {
   handleChange(type, e) {
       this.props.onAnswerChange(type, e.target.value)
   }
+  handleDelete(e) {
+    this.props.answerDelete(e);
+    this.forceUpdate();
+  }
   render() {
     const results = this.props.results.map((x, index)=> <option key={index}>{this.props.results[index].title}</option>)
     return (
@@ -54,6 +59,7 @@ class Answers extends Component {
           <option disabled>Select a Results</option>
           {results}
         </select>
+        <Button css="delete-button" name="Delete Answer" onClick={(e) => this.handleDelete(e)} />
       </li>
     )
   }

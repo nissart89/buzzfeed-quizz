@@ -127,6 +127,13 @@ class Quizz extends Component {
     update.splice([index], 1)
     this.setState({ update });
   }
+  handleAnswerDelete(indexA, indexQ) {
+    console.log(indexA, indexQ)
+    let questions = this.state.questions
+    console.log(questions)
+    questions[indexQ].answers.splice(indexA, 1)
+    this.setState({ questions})
+  }
 
   handleAnswerChange(type, indexQ, indexA, e) {
       let key;
@@ -134,6 +141,7 @@ class Quizz extends Component {
       let questions = this.state.questions;
       let answers = questions[indexQ].answers;
       answers[indexA][key] = e;
+      questions.weirdness = 'whatTF?!'
       this.setState({ questions });
   }
 
@@ -159,6 +167,7 @@ class Quizz extends Component {
                                                                 onTextChange={(type, e) => this.handleQuestionChange(type, index, e)}
                                                                 onAnswerChange={(type, indexA, e) => this.handleAnswerChange(type, index, indexA, e)}
                                                                 questionDelete={(e) => this.handleDeleteButton(index, 'questions', e)}
+                                                                answerDelete={(indexA) => this.handleAnswerDelete(indexA, index)}
                                                                 questionsLength={this.state.questions.length}
                                                                 key={index}
                                                               />)
