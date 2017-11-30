@@ -127,6 +127,7 @@ class Quizz extends Component {
     update.splice([index], 1)
     this.setState({ update });
   }
+
   handleAnswerDelete(indexA, indexQ) {
     console.log(indexA, indexQ)
     let questions = this.state.questions
@@ -141,7 +142,6 @@ class Quizz extends Component {
       let questions = this.state.questions;
       let answers = questions[indexQ].answers;
       answers[indexA][key] = e;
-      questions.weirdness = 'whatTF?!'
       this.setState({ questions });
   }
 

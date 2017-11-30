@@ -11,8 +11,11 @@ export class Questions extends Component {
   }
   render() {
   const answers = this.props.answers.map((x, index) => <Answers results={this.props.results}
+                                                              answerLength = {this.props.answers.length}
                                                               title='Answer'
                                                               key={index}
+                                                              value={this.props.answers[index].title}
+                                                              selectorResults={this.props.answers[index].result}
                                                               onAnswerChange={(type, e) => this.props.onAnswerChange(type, index, e)}
                                                               onSelectChange={(type, e) => this.props.onSelectChange(type, index, e)}
                                                               answerDelete={() => this.props.answerDelete(index)}
@@ -45,21 +48,22 @@ class Answers extends Component {
   handleChange(type, e) {
       this.props.onAnswerChange(type, e.target.value)
   }
-  handleDelete(e) {
-    this.props.answerDelete(e);
-    this.forceUpdate();
+  handleDelete() {
+    if (this.props.answerLength > 1) {
+      return <Button css="delete-button" name="Delete Answer" onClick={(e) => this.props.answerDelete(e)} />
+    }
   }
   render() {
-    const results = this.props.results.map((x, index)=> <option key={index}>{this.props.results[index].title}</option>)
+    const results = this.props.results.map((x, index)=> <option key={index} >{this.props.results[index].title}</option>)
     return (
       <li>
-        <input type="text" placeholder={this.props.title} onChange={(e) => this.handleChange('input', e)} />
+        <input type="text" placeholder={this.props.title} value={this.props.value} onChange={(e) => this.handleChange('input', e)} />
         <br />
-        <select defaultValue="Select a Results" value={this.props.value} onChange={(e) => this.handleChange('select', e)}>
-          <option disabled>Select a Results</option>
+        <select defaultValue="Select a Result" value={this.props.selectorResults === '' ? "Select a Result" : this.props.selectorResults} onChange={(e) => this.handleChange('select', e)}>
+          <option disabled>Select a Result</option>
           {results}
         </select>
-        <Button css="delete-button" name="Delete Answer" onClick={(e) => this.handleDelete(e)} />
+        {this.handleDelete()}
       </li>
     )
   }
