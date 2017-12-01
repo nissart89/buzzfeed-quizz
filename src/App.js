@@ -173,28 +173,30 @@ class Quizz extends Component {
                                                               />)
 
     return (
-      <div className="App">
-        <div className="container-quizz-header">
-          <h1>Buzz<br/>Quizz</h1>
-          <TitleAndDescription
-            onTextChange={(type, e) => this.handleQuizzChange(type, e)}
-            title={this.state.quizz.title}
-            description={this.state.quizz.description}
-            titlePlaceholder="Title"
-            descriptionPlaceholder="Description"/>
-        </div>
-        <div className="container-results">
-          <h2>Results</h2>
-          <div className="result-list">
-            {results}
+      <div className="container-quizz-app">
+        <div className="container-quizz">
+          <div className="container-quizz-header">
+            <h1>Buzz<br/>Quizz</h1>
+            <TitleAndDescription
+              onTextChange={(type, e) => this.handleQuizzChange(type, e)}
+              title={this.state.quizz.title}
+              description={this.state.quizz.description}
+              titlePlaceholder="Title"
+              descriptionPlaceholder="Description"/>
           </div>
-          <Button name="Add a result" onClick={() => this.addResult()}/>
-        </div>
-        <div className="container-questions">
-          <h3>Questions</h3>
-          {questions}
-          <br />
-          <Button name="Add a question" onClick={() => this.addQuestion()}/>
+          <div className="container-results">
+            <h2>Results</h2>
+            <div className="result-list">
+              {results}
+            </div>
+            <Button name="Add a result" onClick={() => this.addResult()}/>
+          </div>
+          <div className="container-questions">
+            <h3>Questions</h3>
+            {questions}
+            <br />
+            <Button name="Add a question" onClick={() => this.addQuestion()}/>
+          </div>
         </div>
         <Button onClick={() => this.saveQuizz()} name="Save this Quizz"/>
       </div>
