@@ -1,23 +1,144 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
+* {
+  box-sizing: border-box;
 }
 
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Acme', sans-serif;
+  background: #43cea2;
+  background: -webkit-linear-gradient(to right bottom, #185a9d, #43cea2);
+  background: linear-gradient(to right bottom, #185a9d, #43cea2);
+}
+
+h1 {
+  font-size: 4em;
+}
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+.App {
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0;
+  max-width: 40rem;
+  margin: 2rem auto;
+  min-height: calc(100vh - 4rem);
+}
+
+input[type="text"], textarea {
+  font-family: 'Acme', sans-serif;
+  width: 100%;
+  padding: .5rem;
+  appearance: none;
+  border: 0;
+  opacity: .85;
+  font-size: 1rem;
+  color: #ff3f00;
+  outline: none;
+}
+
+input[type="text"] {
+  height: 2rem;
+  margin-bottom: .5rem;
+}
+
+textarea {
+  height: 2rem;
+  max-width: 100%;
+  min-width: 100%;
+  max-height: 6em;
+}
+
+button {
+  appearance: none;
+  padding: .5rem 1rem;
+  margin: .5rem 0;
+  background-color: #E44D26;
+  background: linear-gradient(to right, #F16529, #E44D26);
+  color: white;
+  font-size: 1rem;
+  border: 0;
+  box-shadow: 4px 4px 0px #FFFFFF;
+  transition: all .25s;
+  outline: none;
+  width: 100%;
+}
+
+button:hover {
+  box-shadow: 0px 0px 0px #FFFFFF;
+  transform: scale(.975);
+  cursor: pointer;
+}
+
+@keyframes anim-tooltip {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  25%, 75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
 .saved-tooltip {
   position: fixed;
   top: 50%;
   left: 50%;
   color: white;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0) ;
   background: rgba(0, 0, 0, 0.74);
   padding: 1em;
   font-size: 3em;
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  animation-duration: 1s;
+
 }
 
 .saved-tooltip.visible {
-  opacity: 1;
-  scale: 1;
-  display: block;
-  
+  animation: anim-tooltip 1s normal backwards;
+}
+
+button:disabled {
+  background: grey;
+  box-shadow: none;
+}
+
+button:disabled:hover {
+  transform: none;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.edit-quizz-button {
+  width: 25%;
+}
+
+.quizz-list li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quizz-list li span {
+  flex: 1 1 33%;
+  text-align: left;
 }
