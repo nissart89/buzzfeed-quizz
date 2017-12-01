@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Quizz from './App';
 import { Button } from './components/Button';
+import { TakeQuizz } from './takeQuizz'
 
 class MainApp extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class MainApp extends Component {
   render() {
     return (
       <div>
-        <Quizz renderQuizz="..." saveQuizz={(state) => this.saveQuizz(state)}/>
+        {/* <Quizz renderQuizz="..." saveQuizz={(state) => this.saveQuizz(state)}/> */}
+        {/* <TakeQuizz /> */}
       </div>
     );
   }
