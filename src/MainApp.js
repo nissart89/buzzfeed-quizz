@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Quizz from './App';
 import {ListOfQuizz} from './components/ListOfQuizz'
 import { Button } from './components/Button';
+import { TakeQuizz } from './takeQuizz'
 
 class MainApp extends Component {
   constructor(props) {
