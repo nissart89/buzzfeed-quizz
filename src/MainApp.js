@@ -4,12 +4,17 @@ import {ListOfQuizz} from './components/ListOfQuizz'
 import { Button } from './components/Button';
 import { TakeQuizz } from './takeQuizz'
 
+
 class MainApp extends Component {
   constructor(props) {
     super(props)
+
+    const localQuizz = window.localStorage.getItem("SavedQuizz");
+    const parsedLocalQuizz = JSON.parse(localQuizz);
     this.state = {
-      'SavedQuizz': [],
+      'SavedQuizz': parsedLocalQuizz ? parsedLocalQuizz['SavedQuizz'] : [],
       'CreateQuizz': false,
+      'LoadQuizz': false,
     }
   }
   saveQuizz(state) {
@@ -17,45 +22,72 @@ class MainApp extends Component {
       let quizzTitle = window.prompt('Please enter a title for your awesome BuzzQuizz')
       if (quizzTitle) {
         state.quizz.title = quizzTitle;
-        const savedTooltip = document.getElementById('saved-tooltip');
-        savedTooltip.classList.add('visible');
-        setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
-        this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
       }
       else {
-        alert('Not saved...')
+        return alert('Not saved...')
       }
     }
-    else {
+
+    // after the first save, check the quiz id and overwrite same quiz
+    if (this.state.SavedQuizz.length < 1) {
       const savedTooltip = document.getElementById('saved-tooltip');
       savedTooltip.classList.add('visible');
       setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
-      // savedTooltip.style.animationDuration;
-      // let duration = window.getComputedStyle(savedTooltip, null).getPropertyValue("animationDuration");
-      // console.log(' >> ', duration);
+
       this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
+      // Save locally
+      localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": [...this.state.SavedQuizz, state]}));
+    }
+    else {
+      for (let i = 0; i < this.state.SavedQuizz.length; i++) {
+        if (this.state.SavedQuizz[i].id === state.id) {
+          const savedQuizz = this.state.SavedQuizz
+          savedQuizz.splice([i], 1, state)
+          this.setState({"SavedQuizz": savedQuizz})
+
+          localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": savedQuizz}));
+          break;
+        }
+        else {
+          const savedTooltip = document.getElementById('saved-tooltip');
+          savedTooltip.classList.add('visible');
+          setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
+
+          localStorage.setItem('savedStates', this.state.SavedQuizz);
+          this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
+          localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": [...this.state.SavedQuizz, state]}));
+
+        }
+      }
     }
   }
 
-  loadQuizz(state) {
-
+  handleEditQuizz(index) {
+    this.setState({LoadQuizz : index})
+    this.setState({CreateQuizz : true})
   }
 
   handleCreateNewQuizz(newQuizz) {
-    if (!newQuizz) {
-      let r = window.confirm("Are you sure?!")
-      if (r) this.setState({CreateQuizz : newQuizz})
-    } else {
-      this.setState({CreateQuizz : newQuizz})
-    }
+    this.setState({LoadQuizz : false})
+    this.setState({CreateQuizz : newQuizz})
   }
 
   createQuizz() {
     let that = this;
     if (this.state.CreateQuizz) {
       return (
-        <Quizz saveQuizz={(state) => this.saveQuizz(state)}/>
+        <Quizz saveQuizz={(state) => this.saveQuizz(state)} loadQuizz={this.state.LoadQuizz !== false ? this.state.SavedQuizz[this.state.LoadQuizz] : null}/>
       )
+    }
+  }
+
+  handleDeleteQuizz(index) {
+    const ok = window.confirm(`Are you sure you want to delete the quizz "${this.state.SavedQuizz[index].quizz.title}"?`)
+    if (ok) {
+      const savedQuizz = this.state.SavedQuizz;
+      savedQuizz.splice([index], 1)
+      this.setState({"SavedQuizz": savedQuizz})
+      localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": savedQuizz}));
     }
   }
 
@@ -63,10 +95,10 @@ class MainApp extends Component {
     return (
       <div className="App">
         { this.state.CreateQuizz ? null : <h1>BuzzQuizz FTW</h1>}
-        { this.state.CreateQuizz ? null : <Button css="create-quizz-button" name="Create a Quizz" onClick={() => this.handleCreateNewQuizz(true)}/>}
+        { this.state.CreateQuizz ? null : <Button css="create-quizz-button" name="Create a New Quizz" onClick={() => this.handleCreateNewQuizz(true)}/>}
         { this.createQuizz() }
         { this.state.CreateQuizz ? <Button css="quizz-back-button" name="Back to the Quizz List" onClick={() => this.handleCreateNewQuizz(false)}/> : null }
-        <ListOfQuizz listOfQuizz={this.state.SavedQuizz}/>
+        { this.state.CreateQuizz ? null : <ListOfQuizz deleteQuizz={(index) => this.handleDeleteQuizz(index)} editQuizz={(index) => this.handleEditQuizz(index)} listOfQuizz={this.state.SavedQuizz}/>}
         <div id="saved-tooltip" className="saved-tooltip">Quizz Saved!</div>
       </div>
     );
