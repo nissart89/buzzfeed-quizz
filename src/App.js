@@ -10,10 +10,14 @@ import { TitleAndDescription } from './components/TitleAndDescription';
 import logo from './logo.svg';
 import './App.css';
 
+// Library
+var shortid = require('shortid');
+
 class Quizz extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.props.loadQuizz ? this.props.loadQuizz : {
+      "id": shortid.generate(),
       "quizz": {
         "title": '',
         "description": ''
@@ -129,9 +133,7 @@ class Quizz extends Component {
   }
 
   handleAnswerDelete(indexA, indexQ) {
-    console.log(indexA, indexQ)
     let questions = this.state.questions
-    console.log(questions)
     questions[indexQ].answers.splice(indexA, 1)
     this.setState({ questions})
   }

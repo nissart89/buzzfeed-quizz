@@ -129,7 +129,15 @@ button:disabled:hover {
 }
 
 button.edit-quizz-button {
-  width: 25%;
+  flex-basis: 20%;
+  background: linear-gradient(to bottom right, #004D40, #009688);
+}
+button.delete-quizz-button {
+  flex-basis: 5%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 1em;
+  background: linear-gradient(to bottom left, #d44b54, #8c004d);
 }
 
 .quizz-list li{
