@@ -77,6 +77,42 @@ class TakeQuizz extends Component {
     this.setState({currentQuiz : quiz})
   }
 
+  handleAnswerClick(result) {
+    let quiz = this.state.currentQuiz
+    let answers = this.state.answers
+    answers.push(result)
+    quiz.questions.splice(0, 1)
+    this.setState({ 
+      currentQuiz: quiz,
+      answers: answers
+     })
+  }
+
+  questionOrResult() {
+      if (this.state.currentQuiz.questions.length > 0) {
+        return (
+          <div>
+            <DisplayQuestions questions={this.state.currentQuiz.questions[0]} answerClick={(result) => this.handleAnswerClick(result)} />
+          </div>
+        )
+      }
+      else {
+        let currentResult = this.state.answers.sort((a, b) =>
+          this.state.answers.filter(v => v === a).length
+          - this.state.answers.filter(v => v === b).length
+        ).pop()
+        let result = this.state.currentQuiz.results.find(o => o.title === currentResult);
+        console.log(result)
+        return (
+          <TitleAndDescription
+            title={result.title}
+            description={result.description}
+            notEditable
+          />
+        )
+      }
+  }
+
   render () {
     return (
       <div className='takeQuizz'>
@@ -88,8 +124,7 @@ class TakeQuizz extends Component {
             notEditable
             />
         </div>
-        <DisplayQuestions questions= {this.state.currentQuiz.questions[0]}/>
-        <Button name={"next question"} onClick={() => this.deleteQuestion()} />
+        {this.questionOrResult()}
       </div>
 
     )
