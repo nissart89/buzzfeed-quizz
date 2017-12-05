@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Quizz from './App';
 import {ListOfQuizz} from './components/ListOfQuizz'
 import { Button } from './components/Button';
-import { TakeQuizz } from './takeQuizz'
+import TakeQuizz from './takeQuizz'
 
 
 class MainApp extends Component {
@@ -15,6 +15,7 @@ class MainApp extends Component {
       'SavedQuizz': parsedLocalQuizz ? parsedLocalQuizz['SavedQuizz'] : [],
       'CreateQuizz': false,
       'LoadQuizz': false,
+      'TakeQuizz' : false
     }
   }
   saveQuizz(state) {
@@ -61,15 +62,29 @@ class MainApp extends Component {
       }
     }
   }
+  handleTakeQuizz(index) {
+    this.setState({ LoadQuizz: index })
+    this.setState({ TakeQuizz: true })
+    this.setState({ CreateQuizz: false })
+  }
 
   handleEditQuizz(index) {
     this.setState({LoadQuizz : index})
-    this.setState({CreateQuizz : true})
+    this.setState({CreateQuizz : false})
   }
 
   handleCreateNewQuizz(newQuizz) {
     this.setState({LoadQuizz : false})
+    this.setState({TakeQuizz : false})
     this.setState({CreateQuizz : newQuizz})
+  }
+
+  takeQuizz() {
+    if (this.state.TakeQuizz) {
+      console.log(this.state.TakeQuizz)
+    return ( 
+      <TakeQuizz loadQuizz={this.state.LoadQuizz !== false ? this.state.SavedQuizz[this.state.LoadQuizz] : null} />)
+    }
   }
 
   createQuizz() {
@@ -97,8 +112,9 @@ class MainApp extends Component {
         { this.state.CreateQuizz ? null : <h1>BuzzQuizz FTW</h1>}
         { this.state.CreateQuizz ? null : <Button css="create-quizz-button" name="Create a New Quizz" onClick={() => this.handleCreateNewQuizz(true)}/>}
         { this.createQuizz() }
-        { this.state.CreateQuizz ? <Button css="quizz-back-button" name="Back to the Quizz List" onClick={() => this.handleCreateNewQuizz(false)}/> : null }
-        { this.state.CreateQuizz ? null : <ListOfQuizz deleteQuizz={(index) => this.handleDeleteQuizz(index)} editQuizz={(index) => this.handleEditQuizz(index)} listOfQuizz={this.state.SavedQuizz}/>}
+        { this.takeQuizz() }
+        {this.state.CreateQuizz || this.state.TakeQuizz ? <Button css="quizz-back-button" name="Back to the Quizz List" onClick={() => this.handleCreateNewQuizz(false)}/> : null }
+        {this.state.CreateQuizz || this.state.TakeQuizz ? null : <ListOfQuizz deleteQuizz={(index) => this.handleDeleteQuizz(index)} editQuizz={(index) => this.handleEditQuizz(index)} takeQuizz={(index) => this.handleTakeQuizz(index)} listOfQuizz={this.state.SavedQuizz}/>}
         <div id="saved-tooltip" className="saved-tooltip">Quizz Saved!</div>
       </div>
     );

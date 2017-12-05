@@ -13,54 +13,7 @@ class TakeQuizz extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentQuiz: {
-        "quizz": {
-          "title": 'Best Quizz Title',
-          "description": 'This is obviously the best quizz'
-        },
-        "results": [
-          {
-            "title": 'best result',
-            "description": 'this is obviously the best result',
-            "count": ''
-          },
-          {
-            "title": 'worst result',
-            "description": 'this is most definitly the worst resutl',
-            "count": ''
-          },
-        ],
-        "questions": [
-          {
-            "title": "what result would you like?!",
-            "description": "this questions is to determine which result you want to get",
-            "answers": [
-              {
-                "title": "The Best Result",
-                "result": "best result",
-              },
-              {
-                "title": "The Worst Result",
-                "result": "worst result",
-              },
-            ]
-          },
-          {
-            "title": "what result would you like?!!!",
-            "description": "this questions is to determiadsfafne which result you want to get",
-            "answers": [
-              {
-                "title": "The Best Resu12lt",
-                "result": "best result",
-              },
-              {
-                "title": "The Worasdfast Result",
-                "result": "worst result",
-              },
-            ]
-          }
-        ]
-      },
+      currentQuiz: this.props.loadQuizz,      
       answers : []
 
 
@@ -101,14 +54,15 @@ class TakeQuizz extends Component {
           this.state.answers.filter(v => v === a).length
           - this.state.answers.filter(v => v === b).length
         ).pop()
-        let result = this.state.currentQuiz.results.find(o => o.title === currentResult);
-        console.log(result)
+        let result = this.state.currentQuiz.results.find(o => o.title === currentResult) ? this.state.currentQuiz.results.find(o => o.title === currentResult) : "no results";
         return (
-          <TitleAndDescription
-            title={result.title}
-            description={result.description}
-            notEditable
-          />
+          <div className="result-list">
+            <TitleAndDescription
+              title={result.title}
+              description={result.description}
+              notEditable
+            />
+          </div>
         )
       }
   }
@@ -119,7 +73,7 @@ class TakeQuizz extends Component {
         <div className="container-quizz-header">
           <h1>Buzz<br />Quizz</h1>
           <TitleAndDescription
-            title = {this.state.currentQuiz.quizz.title}
+            title={this.state.currentQuiz.quizz.title}
             description={this.state.currentQuiz.quizz.description} 
             notEditable
             />
