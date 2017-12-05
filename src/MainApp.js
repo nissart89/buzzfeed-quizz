@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Quizz from './App';
 import {ListOfQuizz} from './components/ListOfQuizz'
 import { Button } from './components/Button';
-import TakeQuizz from './takeQuizz'
+import TakeQuizz from './takeQuizz';
+
 
 
 class MainApp extends Component {
@@ -65,12 +66,11 @@ class MainApp extends Component {
   handleTakeQuizz(index) {
     this.setState({ LoadQuizz: index })
     this.setState({ TakeQuizz: true })
-    this.setState({ CreateQuizz: false })
   }
-
+  
   handleEditQuizz(index) {
     this.setState({LoadQuizz : index})
-    this.setState({CreateQuizz : false})
+    this.setState({CreateQuizz : true})
   }
 
   handleCreateNewQuizz(newQuizz) {

@@ -4,10 +4,12 @@ import React, { Component } from 'react';
 import { Button } from './components/Button';
 import { TitleAndDescription } from './components/TitleAndDescription'
 import { DisplayQuestions } from './components/displayQuestions'
+import _ from 'lodash';
 
 // React Components
 import logo from './logo.svg';
 import './App.css';
+
 
 class TakeQuizz extends Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class TakeQuizz extends Component {
   }
 
   handleAnswerClick(result) {
-    let quiz = this.state.currentQuiz
+    let quiz = _.cloneDeep(this.state.currentQuiz)
     let answers = this.state.answers
     answers.push(result)
     quiz.questions.splice(0, 1)
