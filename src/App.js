@@ -12,11 +12,12 @@ import './App.css';
 
 // Library
 var shortid = require('shortid');
+var _ = require('lodash');
 
 class Quizz extends Component {
   constructor(props) {
     super(props);
-    this.state = this.props.loadQuizz ? this.props.loadQuizz : {
+    this.state = this.props.loadQuizz ? _.cloneDeep(this.props.loadQuizz) : {
       "id": shortid.generate(),
       "quizz": {
         "title": '',

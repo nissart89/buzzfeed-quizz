@@ -4,7 +4,7 @@ import {ListOfQuizz} from './components/ListOfQuizz'
 import { Button } from './components/Button';
 import TakeQuizz from './takeQuizz';
 
-
+var _ = require('lodash');
 
 class MainApp extends Component {
   constructor(props) {
@@ -32,42 +32,48 @@ class MainApp extends Component {
 
     // after the first save, check the quiz id and overwrite same quiz
     if (this.state.SavedQuizz.length < 1) {
-      const savedTooltip = document.getElementById('saved-tooltip');
-      savedTooltip.classList.add('visible');
-      setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
-
+      console.log('FIRST SAVE')
       this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
       // Save locally
       localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": [...this.state.SavedQuizz, state]}));
+      this.saveAnimation()
     }
     else {
+      let quizzIndex = null;
+
       for (let i = 0; i < this.state.SavedQuizz.length; i++) {
         if (this.state.SavedQuizz[i].id === state.id) {
-          const savedQuizz = this.state.SavedQuizz
-          savedQuizz.splice([i], 1, state)
-          this.setState({"SavedQuizz": savedQuizz})
-
-          localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": savedQuizz}));
+          quizzIndex = [i];
           break;
         }
-        else {
-          const savedTooltip = document.getElementById('saved-tooltip');
-          savedTooltip.classList.add('visible');
-          setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
+      }
+      if (quizzIndex) {
+        const savedQuizz = _.cloneDeep(this.state.SavedQuizz);
+        savedQuizz[quizzIndex] = state;
 
-          localStorage.setItem('savedStates', this.state.SavedQuizz);
-          this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
-          localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": [...this.state.SavedQuizz, state]}));
+        this.setState({"SavedQuizz": savedQuizz})
 
-        }
+        localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": savedQuizz}));
+        this.saveAnimation()
+      } else {
+        localStorage.setItem('savedStates', this.state.SavedQuizz);
+        this.setState({"SavedQuizz": [...this.state.SavedQuizz, state]})
+        localStorage.setItem('SavedQuizz', JSON.stringify({"SavedQuizz": [...this.state.SavedQuizz, state]}));
+        this.saveAnimation()
       }
     }
+  }
+
+  saveAnimation() {
+    const savedTooltip = document.getElementById('saved-tooltip');
+    savedTooltip.classList.add('visible');
+    setTimeout(() => savedTooltip.classList.remove('visible'), 1250);
   }
   handleTakeQuizz(index) {
     this.setState({ LoadQuizz: index })
     this.setState({ TakeQuizz: true })
   }
-  
+
   handleEditQuizz(index) {
     this.setState({LoadQuizz : index})
     this.setState({CreateQuizz : true})
@@ -82,7 +88,7 @@ class MainApp extends Component {
   takeQuizz() {
     if (this.state.TakeQuizz) {
       console.log(this.state.TakeQuizz)
-    return ( 
+    return (
       <TakeQuizz loadQuizz={this.state.LoadQuizz !== false ? this.state.SavedQuizz[this.state.LoadQuizz] : null} />)
     }
   }
@@ -109,8 +115,8 @@ class MainApp extends Component {
   render() {
     return (
       <div className="App">
-        { this.state.CreateQuizz ? null : <h1>BuzzQuizz FTW</h1>}
-        { this.state.CreateQuizz ? null : <Button css="create-quizz-button" name="Create a New Quizz" onClick={() => this.handleCreateNewQuizz(true)}/>}
+        {this.state.CreateQuizz || this.state.TakeQuizz ? null : <h1>BuzzQuizz FTW</h1>}
+        {this.state.CreateQuizz || this.state.TakeQuizz ? null : <Button css="create-quizz-button" name="Create a New Quizz" onClick={() => this.handleCreateNewQuizz(true)}/>}
         { this.createQuizz() }
         { this.takeQuizz() }
         {this.state.CreateQuizz || this.state.TakeQuizz ? <Button css="quizz-back-button" name="Back to the Quizz List" onClick={() => this.handleCreateNewQuizz(false)}/> : null }
